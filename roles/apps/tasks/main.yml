@@ -1,0 +1,41 @@
+---
+- name: enable repos
+  template:
+    src: open_three-tier-app.repo
+    dest: /etc/yum.repos.d/open_three-tier-app.repo
+    mode: 0644
+
+- name: install apache
+  yum:
+    name: httpd
+    state: latest
+
+- name: enable apache at boot
+  service:
+    name: httpd
+    enabled: yes
+  notify:
+  - start apache
+
+- name: install tomcat
+  package:
+    name: tomcat
+    state: latest
+
+- name: enable tomcat at boot
+  service:
+    name: tomcat
+    enabled: yes
+  notify:
+  - start tomcat
+
+- name: create ansible tomcat directory
+  file:
+    path: /usr/share/tomcat/webapps/ROOT
+    state: directory
+
+- name: copy static index.html to tomcat webapps/ansible/index.html
+  template:
+    src: index.html.j2
+    dest: /usr/share/tomcat/webapps/ROOT/index.html
+    mode: 0644

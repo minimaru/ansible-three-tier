@@ -1,0 +1,23 @@
+---
+- name: enable repos
+  template:
+    src: open_three-tier-app.repo
+    dest: /etc/yum.repos.d/open_three-tier-app.repo
+    mode: 0644
+
+- name: http
+  package:
+    name: httpie
+    state: latest
+
+- name: install HAProxy
+  yum:
+    name: haproxy
+    state: latest
+
+- name: configure haproxy
+  template:
+    src: ./haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+  notify:
+  - restart HAproxy

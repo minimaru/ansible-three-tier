@@ -1,0 +1,6 @@
+---
+- name: start postgres
+  service:
+    name: postgresql.service
+    state: restarted
+    daemon_reload: yes

@@ -1,0 +1,6 @@
+---
+- hosts: tierapp
+  roles:
+    - { role: appdbs, when: "'appdbs' in group_names" }
+    - { role: apps, when: "'apps' in group_names" }
+    - { role: frontends, when: "'frontends' in group_names" }

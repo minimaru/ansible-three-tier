@@ -1,0 +1,10 @@
+---
+- name: start apache
+  service:
+    name: httpd
+    state: restarted
+
+- name: start tomcat
+  service:
+    name: tomcat
+    state: started
